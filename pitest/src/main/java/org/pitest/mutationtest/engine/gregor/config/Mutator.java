@@ -161,7 +161,7 @@ public final class Mutator {
     addGroup("ALL", all());
     addGroup("NEW_DEFAULTS", newDefaults());
 
-    /* implementation of ROR mutator*/
+    /* implementation of ROR mutators*/
     addGroup("ROR", ror());
 
   }
