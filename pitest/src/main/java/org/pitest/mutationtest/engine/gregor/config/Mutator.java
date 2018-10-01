@@ -31,24 +31,8 @@ import org.pitest.functional.prelude.Prelude;
 import org.pitest.help.Help;
 import org.pitest.help.PitHelpError;
 import org.pitest.mutationtest.engine.gregor.MethodMutatorFactory;
-import org.pitest.mutationtest.engine.gregor.mutators.ArgumentPropagationMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.BooleanFalseReturnValsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.BooleanTrueReturnValsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.ConstructorCallMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.EmptyObjectReturnValsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.IncrementsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.InlineConstantMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.InvertNegsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.MathMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.NegateConditionalsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.NonVoidMethodCallMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.NullReturnValsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.PrimitiveReturnsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.RemoveConditionalMutator;
+import org.pitest.mutationtest.engine.gregor.mutators.*;
 import org.pitest.mutationtest.engine.gregor.mutators.RemoveConditionalMutator.Choice;
-import org.pitest.mutationtest.engine.gregor.mutators.ReturnValsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.experimental.NakedReceiverMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.experimental.RemoveIncrementsMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.experimental.RemoveSwitchMutator;
@@ -176,6 +160,10 @@ public final class Mutator {
     addGroup("STRONGER", stronger());
     addGroup("ALL", all());
     addGroup("NEW_DEFAULTS", newDefaults());
+
+    /* implementation of ROR mutator*/
+    addGroup("ROR", ror());
+
   }
 
   public static Collection<MethodMutatorFactory> all() {
@@ -207,6 +195,17 @@ public final class Mutator {
         NegateConditionalsMutator.NEGATE_CONDITIONALS_MUTATOR,
         ConditionalsBoundaryMutator.CONDITIONALS_BOUNDARY_MUTATOR,
         IncrementsMutator.INCREMENTS_MUTATOR);
+  }
+
+  public static Collection<MethodMutatorFactory> ror() {
+    return group(
+            RelationalOperatorReplacementMutator.EQUALS_MUTATOR,
+            RelationalOperatorReplacementMutator.NOT_EQUAL_MUTATOR,
+            RelationalOperatorReplacementMutator.LESS_MUTATOR,
+            RelationalOperatorReplacementMutator.LESS_OR_EQUAL_MUTATOR,
+            RelationalOperatorReplacementMutator.GREATER_MUTATOR,
+            RelationalOperatorReplacementMutator.GREATER_OR_EQUAL_MUTATOR
+    );
   }
 
   /**
