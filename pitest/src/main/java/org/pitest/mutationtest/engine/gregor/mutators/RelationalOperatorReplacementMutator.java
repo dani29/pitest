@@ -21,12 +21,12 @@ public enum RelationalOperatorReplacementMutator implements MethodMutatorFactory
 
         @Override
         public String getGloballyUniqueId() {
-            return this.getClass().getName();
+            return this.getClass().getName() +  " EqualsMutator";
         }
 
         @Override
         public String getName() {
-            return name();
+            return RelationalOperatorReplacementMutator.EQUALS_MUTATOR.name();
         }
     },
 
@@ -39,12 +39,12 @@ public enum RelationalOperatorReplacementMutator implements MethodMutatorFactory
 
         @Override
         public String getGloballyUniqueId() {
-            return this.getClass().getName();
+            return this.getClass().getName() + " NonEqualMutator";
         }
 
         @Override
         public String getName() {
-            return name();
+            return RelationalOperatorReplacementMutator.NOT_EQUAL_MUTATOR.name();
         }
     },
 
@@ -57,12 +57,12 @@ public enum RelationalOperatorReplacementMutator implements MethodMutatorFactory
 
         @Override
         public String getGloballyUniqueId() {
-            return this.getClass().getName();
+            return this.getClass().getName() + " GreaterOrEqualMutator";
         }
 
         @Override
         public String getName() {
-            return name();
+            return RelationalOperatorReplacementMutator.GREATER_OR_EQUAL_MUTATOR.name();
         }
     },
 
@@ -75,12 +75,12 @@ public enum RelationalOperatorReplacementMutator implements MethodMutatorFactory
 
         @Override
         public String getGloballyUniqueId() {
-            return this.getClass().getName();
+            return this.getClass().getName() + " GreaterMutator";
         }
 
         @Override
         public String getName() {
-            return name();
+            return RelationalOperatorReplacementMutator.GREATER_MUTATOR.name();
         }
     },
 
@@ -93,12 +93,12 @@ public enum RelationalOperatorReplacementMutator implements MethodMutatorFactory
 
         @Override
         public String getGloballyUniqueId() {
-            return this.getClass().getName();
+            return this.getClass().getName() + " LessOrEqualMutator";
         }
 
         @Override
         public String getName() {
-            return name();
+            return RelationalOperatorReplacementMutator.LESS_OR_EQUAL_MUTATOR.name();
         }
     },
 
@@ -111,12 +111,12 @@ public enum RelationalOperatorReplacementMutator implements MethodMutatorFactory
 
         @Override
         public String getGloballyUniqueId() {
-            return this.getClass().getName();
+            return this.getClass().getName() + " LessMutator";
         }
 
         @Override
         public String getName() {
-            return name();
+            return RelationalOperatorReplacementMutator.LESS_MUTATOR.name();
         }
     }
 }
@@ -126,27 +126,27 @@ class EqualsOpeatorMethodVisitor extends AbstractJumpMutator {
 
     private static final Map<Integer, Substitution> MUTATIONS = new HashMap<>();
     static {
-        String DESCRIPTION = "Changed > to ==";
-        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFEQ, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPEQ, DESCRIPTION));
+        String description = "Changed > to ==";
+        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFEQ, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPEQ, description));
 
-        DESCRIPTION = "Changed < to ==";
-        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFEQ, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPEQ, DESCRIPTION));
+        description = "Changed < to ==";
+        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFEQ, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPEQ, description));
 
-        DESCRIPTION = "Changed >= to ==";
-        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFEQ, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPEQ, DESCRIPTION));
+        description = "Changed >= to ==";
+        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFEQ, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPEQ, description));
 
-        DESCRIPTION = "Changed <= to ==";
-        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFEQ, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPEQ, DESCRIPTION));
+        description = "Changed <= to ==";
+        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFEQ, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPEQ, description));
 
-        DESCRIPTION = "Changed != to ==";
-        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFEQ, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPEQ, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ACMPNE, new Substitution(Opcodes.IF_ACMPEQ, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IFNONNULL, new Substitution(Opcodes.IFNULL, DESCRIPTION));
+        description = "Changed != to ==";
+        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFEQ, description));
+        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPEQ, description));
+        MUTATIONS.put(Opcodes.IF_ACMPNE, new Substitution(Opcodes.IF_ACMPEQ, description));
+        MUTATIONS.put(Opcodes.IFNONNULL, new Substitution(Opcodes.IFNULL, description));
     }
 
     EqualsOpeatorMethodVisitor(final MethodMutatorFactory factory,
@@ -167,27 +167,27 @@ class NotEqualOpeatorMethodVisitor extends AbstractJumpMutator {
     private static final Map<Integer, Substitution> MUTATIONS   = new HashMap<>();
 
     static {
-        String DESCRIPTION = "Changed > to !=";
-        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFNE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPNE, DESCRIPTION));
+        String description = "Changed > to !=";
+        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFNE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPNE, description));
 
-        DESCRIPTION = "Changed < to !=";
-        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFNE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPNE, DESCRIPTION));
+        description = "Changed < to !=";
+        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFNE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPNE, description));
 
-        DESCRIPTION = "Changed >= to !=";
-        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFNE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPNE, DESCRIPTION));
+        description = "Changed >= to !=";
+        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFNE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPNE, description));
 
-        DESCRIPTION = "Changed <= to !=";
-        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFNE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPNE, DESCRIPTION));
+        description = "Changed <= to !=";
+        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFNE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPNE, description));
 
-        DESCRIPTION = "Changed == to !=";
-        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFNE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPNE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ACMPEQ, new Substitution(Opcodes.IF_ACMPNE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IFNULL, new Substitution(Opcodes.IFNONNULL, DESCRIPTION));
+        description = "Changed == to !=";
+        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFNE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPNE, description));
+        MUTATIONS.put(Opcodes.IF_ACMPEQ, new Substitution(Opcodes.IF_ACMPNE, description));
+        MUTATIONS.put(Opcodes.IFNULL, new Substitution(Opcodes.IFNONNULL, description));
     }
 
     NotEqualOpeatorMethodVisitor(final MethodMutatorFactory factory,
@@ -208,25 +208,25 @@ class GreaterOrEqualOpeatorMethodVisitor extends AbstractJumpMutator {
     private static final Map<Integer, Substitution> MUTATIONS   = new HashMap<>();
 
     static {
-        String DESCRIPTION = "Changed > to >=";
-        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFGE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPGE, DESCRIPTION));
+        String description = "Changed > to >=";
+        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFGE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPGE, description));
 
-        DESCRIPTION = "Changed < to >=";
-        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFGE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPGE, DESCRIPTION));
+        description = "Changed < to >=";
+        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFGE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPGE, description));
 
-        DESCRIPTION = "Changed != to >=";
-        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFGE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPGE, DESCRIPTION));
+        description = "Changed != to >=";
+        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFGE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPGE, description));
 
-        DESCRIPTION = "Changed <= to >=";
-        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFGE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPGE, DESCRIPTION));
+        description = "Changed <= to >=";
+        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFGE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPGE, description));
 
-        DESCRIPTION = "Changed == to >=";
-        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFGE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPGE, DESCRIPTION));
+        description = "Changed == to >=";
+        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFGE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPGE, description));
     }
 
     GreaterOrEqualOpeatorMethodVisitor(final MethodMutatorFactory factory,
@@ -247,25 +247,25 @@ class GreaterOpeatorMethodVisitor extends AbstractJumpMutator {
     private static final Map<Integer, Substitution> MUTATIONS   = new HashMap<>();
 
     static {
-        String DESCRIPTION = "Changed >= to >";
-        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFGT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPGT, DESCRIPTION));
+        String description = "Changed >= to >";
+        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFGT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPGT, description));
 
-        DESCRIPTION = "Changed < to >";
-        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFGT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPGT, DESCRIPTION));
+        description = "Changed < to >";
+        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFGT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPGT, description));
 
-        DESCRIPTION = "Changed != to >";
-        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFGT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPGT, DESCRIPTION));
+        description = "Changed != to >";
+        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFGT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPGT, description));
 
-        DESCRIPTION = "Changed <= to >";
-        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFGT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPGT, DESCRIPTION));
+        description = "Changed <= to >";
+        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFGT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPGT, description));
 
-        DESCRIPTION = "Changed == to >";
-        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFGT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPGT, DESCRIPTION));
+        description = "Changed == to >";
+        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFGT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPGT, description));
     }
 
     GreaterOpeatorMethodVisitor(final MethodMutatorFactory factory,
@@ -286,25 +286,25 @@ class LessOrEqualOpeatorMethodVisitor extends AbstractJumpMutator {
     private static final Map<Integer, Substitution> MUTATIONS   = new HashMap<>();
 
     static {
-        String DESCRIPTION = "Changed > to <=";
-        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFLE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPLE, DESCRIPTION));
+        String description = "Changed > to <=";
+        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFLE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPLE, description));
 
-        DESCRIPTION = "Changed < to <=";
-        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFLE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPLE, DESCRIPTION));
+        description = "Changed < to <=";
+        MUTATIONS.put(Opcodes.IFLT, new Substitution(Opcodes.IFLE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLT, new Substitution(Opcodes.IF_ICMPLE, description));
 
-        DESCRIPTION = "Changed != to <=";
-        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFLE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPLE, DESCRIPTION));
+        description = "Changed != to <=";
+        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFLE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPLE, description));
 
-        DESCRIPTION = "Changed >= to <=";
-        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFLE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPLE, DESCRIPTION));
+        description = "Changed >= to <=";
+        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFLE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPLE, description));
 
-        DESCRIPTION = "Changed == to <=";
-        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFLE, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPLE, DESCRIPTION));
+        description = "Changed == to <=";
+        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFLE, description));
+        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPLE, description));
     }
 
     LessOrEqualOpeatorMethodVisitor(final MethodMutatorFactory factory,
@@ -325,25 +325,25 @@ class LessOperatorMethodVisitor extends AbstractJumpMutator {
     private static final Map<Integer, Substitution> MUTATIONS   = new HashMap<>();
 
     static {
-        String DESCRIPTION = "Changed > to <";
-        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFLT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPLT, DESCRIPTION));
+        String description = "Changed > to <";
+        MUTATIONS.put(Opcodes.IFGT, new Substitution(Opcodes.IFLT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGT, new Substitution(Opcodes.IF_ICMPLT, description));
 
-        DESCRIPTION = "Changed <= to <";
-        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFLT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPLT, DESCRIPTION));
+        description = "Changed <= to <";
+        MUTATIONS.put(Opcodes.IFLE, new Substitution(Opcodes.IFLT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPLE, new Substitution(Opcodes.IF_ICMPLT, description));
 
-        DESCRIPTION = "Changed != to <";
-        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFLT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPLT, DESCRIPTION));
+        description = "Changed != to <";
+        MUTATIONS.put(Opcodes.IFNE, new Substitution(Opcodes.IFLT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPNE, new Substitution(Opcodes.IF_ICMPLT, description));
 
-        DESCRIPTION = "Changed >= to <";
-        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFLT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPLT, DESCRIPTION));
+        description = "Changed >= to <";
+        MUTATIONS.put(Opcodes.IFGE, new Substitution(Opcodes.IFLT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPGE, new Substitution(Opcodes.IF_ICMPLT, description));
 
-        DESCRIPTION = "Changed == to <";
-        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFLT, DESCRIPTION));
-        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPLT, DESCRIPTION));
+        description = "Changed == to <";
+        MUTATIONS.put(Opcodes.IFEQ, new Substitution(Opcodes.IFLT, description));
+        MUTATIONS.put(Opcodes.IF_ICMPEQ, new Substitution(Opcodes.IF_ICMPLT, description));
     }
 
     LessOperatorMethodVisitor(final MethodMutatorFactory factory,
