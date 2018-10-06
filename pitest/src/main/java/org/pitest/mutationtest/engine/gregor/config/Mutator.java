@@ -32,6 +32,7 @@ import org.pitest.help.Help;
 import org.pitest.help.PitHelpError;
 import org.pitest.mutationtest.engine.gregor.MethodMutatorFactory;
 import org.pitest.mutationtest.engine.gregor.mutators.ArgumentPropagationMutator;
+import org.pitest.mutationtest.engine.gregor.mutators.ArithmeticOperandDeletionMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.ArithmeticOperatorReplacementMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.BooleanFalseReturnValsMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.BooleanTrueReturnValsMutator;
@@ -185,6 +186,9 @@ public final class Mutator {
     /* implementation of AOR mutators */
     addGroup("AOR", aor());
 
+    /* implementation of AOD mutators */
+    addGroup("AOD", aod());
+
   }
 
   public static Collection<MethodMutatorFactory> all() {
@@ -237,6 +241,13 @@ public final class Mutator {
             ArithmeticOperatorReplacementMutator.DIVISION_MUTATOR,
             ArithmeticOperatorReplacementMutator.MODULUS_MUTATOR
     );
+  }
+
+  public static Collection<MethodMutatorFactory> aod() {
+      return group(
+              ArithmeticOperandDeletionMutator.DELETE_FIRST_OPERAND,
+              ArithmeticOperandDeletionMutator.DELETE_SECOND_OPERAND
+      );
   }
 
   /**
