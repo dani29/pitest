@@ -32,6 +32,7 @@ import org.pitest.help.Help;
 import org.pitest.help.PitHelpError;
 import org.pitest.mutationtest.engine.gregor.MethodMutatorFactory;
 import org.pitest.mutationtest.engine.gregor.mutators.ArgumentPropagationMutator;
+import org.pitest.mutationtest.engine.gregor.mutators.ArithmeticOperatorReplacementMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.BooleanFalseReturnValsMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.BooleanTrueReturnValsMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator;
@@ -49,11 +50,11 @@ import org.pitest.mutationtest.engine.gregor.mutators.RemoveConditionalMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.RemoveConditionalMutator.Choice;
 import org.pitest.mutationtest.engine.gregor.mutators.ReturnValsMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator;
+import org.pitest.mutationtest.engine.gregor.mutators.RelationalOperatorReplacementMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.experimental.NakedReceiverMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.experimental.RemoveIncrementsMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.experimental.RemoveSwitchMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.experimental.SwitchMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.RelationalOperatorReplacementMutator;
 
 public final class Mutator {
 
@@ -181,6 +182,9 @@ public final class Mutator {
     /* implementation of ROR mutators*/
     addGroup("ROR", ror());
 
+    /* implementation of AOR mutators */
+    addGroup("AOR", aor());
+
   }
 
   public static Collection<MethodMutatorFactory> all() {
@@ -222,6 +226,16 @@ public final class Mutator {
             RelationalOperatorReplacementMutator.LESS_OR_EQUAL_MUTATOR,
             RelationalOperatorReplacementMutator.GREATER_MUTATOR,
             RelationalOperatorReplacementMutator.GREATER_OR_EQUAL_MUTATOR
+    );
+  }
+
+  public static Collection<MethodMutatorFactory> aor() {
+    return group(
+            ArithmeticOperatorReplacementMutator.ADDITION_MUTATOR,
+            ArithmeticOperatorReplacementMutator.SUBTRACTION_MUTATOR,
+            ArithmeticOperatorReplacementMutator.MULTIPLICATION_MUTATOR,
+            ArithmeticOperatorReplacementMutator.DIVISION_MUTATOR,
+            ArithmeticOperatorReplacementMutator.MODULUS_MUTATOR
     );
   }
 
