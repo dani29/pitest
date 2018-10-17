@@ -86,7 +86,7 @@ enum ArithmeticOperandsSize {
     }
 }
 
-// TODO
+//  Abstract class to visit arithmetic operations
 abstract class ArithmeticOperandVisitor extends MethodVisitor {
 
     private MutationContext context;
