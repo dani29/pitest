@@ -1,3 +1,4 @@
+/* Dani Raznikov - dxr151630@utdallas.edu */
 package org.pitest.mutationtest.engine.gregor.mutators;
 
 import org.objectweb.asm.MethodVisitor;
@@ -139,7 +140,9 @@ abstract class ArithmeticOperandVisitor extends MethodVisitor {
     abstract void mutateDoubleSizeOperation();
 }
 
-// TODO
+/* Visitor that deletes the first operand in a binary operation,
+*   For example (a+b) ==> b
+*/
 class DeleteFirstOperandMethodVisitor extends ArithmeticOperandVisitor {
 
     DeleteFirstOperandMethodVisitor(final MethodMutatorFactory factory,
@@ -175,7 +178,9 @@ class DeleteFirstOperandMethodVisitor extends ArithmeticOperandVisitor {
     }
 }
 
-// TODO
+/* Visitor that deletes the second operand in a binary operation,
+ *   For example (a+b) ==> a
+ */
 class DeleteSecondOperandMethodVisitor extends ArithmeticOperandVisitor {
 
      DeleteSecondOperandMethodVisitor(final MethodMutatorFactory factory,
